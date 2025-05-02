@@ -1,0 +1,53 @@
+# Sample Data Examples
+
+This document contains examples of the data stored in each table to help better understand the database structure.
+
+## USERACCOUNTS Sample Data
+
+```
+USER_ID | USERNAME    | PASSWORD              | ROLE
+--------|-------------|----------------------|----------
+1       | admin1      | hashed_password_here | Admin
+2       | recruiter1  | hashed_password_here | Recruiter
+3       | recruiter2  | hashed_password_here | Recruiter
+4       | john_doe    | hashed_password_here | Candidate
+5       | jane_smith  | hashed_password_here | Candidate
+6       | bob_johnson | hashed_password_here | Candidate
+```
+
+## JOBS Sample Data
+
+```
+JOB_ID | TITLE                    | DESCRIPTION                                      | DEPARTMENT
+-------|--------------------------|--------------------------------------------------|-------------
+1      | Software Engineer        | Developing web applications using Java and React | Engineering
+2      | Product Manager          | Managing product lifecycle and roadmap           | Product
+3      | Marketing Specialist     | Planning and executing marketing campaigns       | Marketing
+4      | Senior DevOps Engineer   | Managing cloud infrastructure and CI/CD          | Operations
+5      | UX Designer              | Creating user-friendly interface designs         | Design
+```
+
+## APPLICATIONS Sample Data
+
+```
+APPLICATION_ID | JOB_ID | STATUS             | USER_ID
+---------------|--------|-------------------|--------
+1              | 1      | Interview Scheduled| 4
+2              | 2      | Rejected          | 5
+3              | 1      | Under Review      | 6
+4              | 3      | Applied           | 4
+5              | 4      | Offer Extended    | 5
+```
+
+## INTERVIEWS Sample Data
+
+```
+INTERVIEW_ID | JOB_ID | INTERVIEW_DATE           | INTERVIEW_RESULT | USER_ID
+-------------|--------|--------------------------|-----------------|--------
+1            | 1      | 2023-07-15 14:00:00      | Completed       | 4
+2            | 4      | 2023-07-10 10:30:00      | Completed       | 5
+3            | 1      | 2023-07-22 11:00:00      | Pending         | 6
+4            | 2      | 2023-07-05 15:30:00      | Cancelled       | 5
+```
+
+Note: The actual database may contain different data, but this sample gives an idea of the type of information stored in each table and how they relate to each other.

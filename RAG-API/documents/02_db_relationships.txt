@@ -1,0 +1,32 @@
+# Database Relationships and Foreign Keys
+
+This document explains the relationships between tables in the recruitment system database.
+
+## Key Relationships
+
+1. USER to APPLICATIONS (One-to-Many)
+   - One user can submit multiple job applications
+   - Foreign Key: APPLICATIONS.USER_ID references USERACCOUNTS.USER_ID
+   - This means each application is associated with exactly one user account
+
+2. USER to INTERVIEWS (One-to-Many)
+   - One user can participate in multiple interviews
+   - Foreign Key: INTERVIEWS.USER_ID references USERACCOUNTS.USER_ID
+   - This tracks which candidate is participating in each interview
+
+3. JOB to APPLICATIONS (One-to-Many)
+   - One job posting can receive multiple applications
+   - Foreign Key: APPLICATIONS.JOB_ID references JOBS.JOB_ID
+   - This allows tracking all applications for a specific job posting
+
+4. JOB to INTERVIEWS (One-to-Many)
+   - One job position can have multiple interviews scheduled
+   - Foreign Key: INTERVIEWS.JOB_ID references JOBS.JOB_ID
+   - This connects interviews to specific job positions
+
+## Constraints
+
+- All foreign keys are defined with ENABLE constraints to maintain referential integrity
+- The APPLICATIONS table has a check constraint (CHK_STATUS) to ensure the status value is one of the allowed values
+- The INTERVIEWS table has a check constraint (CHK_INTERVIEW_RESULT) to ensure the interview result is one of the allowed values
+- The USERACCOUNTS table has a check constraint to ensure the role is one of the allowed values (Admin, Recruiter, Candidate)

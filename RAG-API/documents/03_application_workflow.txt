@@ -1,0 +1,42 @@
+# Job Application Workflow
+
+This document describes the typical workflow of job applications in the recruitment system.
+
+## Application Process Flow
+
+1. **Job Posting Creation**
+   - A recruiter creates a new job posting in the JOBS table
+   - Details include job title, description, and department
+
+2. **Application Submission**
+   - A candidate with a user account submits an application
+   - A new record is created in the APPLICATIONS table
+   - Initial status is set to "Applied"
+
+3. **Application Review**
+   - Recruiters review applications
+   - Application status is updated to "Under Review"
+
+4. **Interview Scheduling**
+   - If an application passes initial review, an interview is scheduled
+   - A new record is created in the INTERVIEWS table
+   - The application status is updated to "Interview Scheduled"
+   - Interview result is initially set to "Pending"
+
+5. **Interview Process**
+   - When the interview begins, its status is updated to "In Progress"
+   - After completion, status is updated to "Completed"
+   - If canceled for any reason, status becomes "Cancelled"
+
+6. **Final Decision**
+   - Based on interview results, the application status is updated to either:
+     * "Offer Extended" - if the candidate is selected
+     * "Rejected" - if the candidate is not selected
+
+## Status Transitions
+
+Applications typically follow this status progression:
+Applied → Under Review → Interview Scheduled → Offer Extended/Rejected
+
+Interviews typically follow this status progression:
+Pending → In Progress → Completed (or Cancelled)

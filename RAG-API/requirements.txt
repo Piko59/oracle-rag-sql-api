@@ -1,0 +1,10 @@
+fastapi==0.68.0
+uvicorn==0.15.0
+oracledb==1.0.0
+langchain==0.0.200
+langchain-community>=0.0.5
+openai==0.27.0
+python-dotenv
+faiss-cpu
+tiktoken
+numpy

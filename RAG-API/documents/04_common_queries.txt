@@ -1,0 +1,98 @@
+# Common Database Queries
+
+This document provides examples of common queries that might be needed when working with the recruitment database.
+
+## User Management Queries
+
+1. **Get all users by role**
+   ```sql
+   SELECT USER_ID, USERNAME FROM USERACCOUNTS WHERE ROLE = 'Candidate';
+   ```
+
+2. **Count users by role**
+   ```sql
+   SELECT ROLE, COUNT(*) FROM USERACCOUNTS GROUP BY ROLE;
+   ```
+
+## Job Related Queries
+
+1. **List all jobs by department**
+   ```sql
+   SELECT JOB_ID, TITLE FROM JOBS WHERE DEPARTMENT = 'Engineering';
+   ```
+
+2. **Find jobs with most applications**
+   ```sql
+   SELECT j.JOB_ID, j.TITLE, COUNT(a.APPLICATION_ID) as APPLICATION_COUNT
+   FROM JOBS j
+   JOIN APPLICATIONS a ON j.JOB_ID = a.JOB_ID
+   GROUP BY j.JOB_ID, j.TITLE
+   ORDER BY APPLICATION_COUNT DESC;
+   ```
+
+## Application Status Queries
+
+1. **Count applications by status**
+   ```sql
+   SELECT STATUS, COUNT(*) FROM APPLICATIONS GROUP BY STATUS;
+   ```
+
+2. **Find all applications for a specific user**
+   ```sql
+   SELECT a.APPLICATION_ID, j.TITLE, a.STATUS
+   FROM APPLICATIONS a
+   JOIN JOBS j ON a.JOB_ID = j.JOB_ID
+   WHERE a.USER_ID = [user_id];
+   ```
+
+3. **Find all applications for a specific job**
+   ```sql
+   SELECT a.APPLICATION_ID, u.USERNAME, a.STATUS
+   FROM APPLICATIONS a
+   JOIN USERACCOUNTS u ON a.USER_ID = u.USER_ID
+   WHERE a.JOB_ID = [job_id];
+   ```
+
+## Interview Management Queries
+
+1. **List upcoming interviews**
+   ```sql
+   SELECT i.INTERVIEW_ID, j.TITLE, u.USERNAME, i.INTERVIEW_DATE
+   FROM INTERVIEWS i
+   JOIN JOBS j ON i.JOB_ID = j.JOB_ID
+   JOIN USERACCOUNTS u ON i.USER_ID = u.USER_ID
+   WHERE i.INTERVIEW_RESULT = 'Pending'
+   AND i.INTERVIEW_DATE > SYSDATE
+   ORDER BY i.INTERVIEW_DATE;
+   ```
+
+2. **Find completed interviews with no decision**
+   ```sql
+   SELECT i.INTERVIEW_ID, j.TITLE, u.USERNAME
+   FROM INTERVIEWS i
+   JOIN JOBS j ON i.JOB_ID = j.JOB_ID
+   JOIN USERACCOUNTS u ON i.USER_ID = u.USER_ID
+   JOIN APPLICATIONS a ON (a.JOB_ID = i.JOB_ID AND a.USER_ID = i.USER_ID)
+   WHERE i.INTERVIEW_RESULT = 'Completed'
+   AND a.STATUS = 'Interview Scheduled';
+   ```
+
+## Recruitment Performance Queries
+
+1. **Calculate average time from application to interview**
+   ```sql
+   SELECT AVG(i.INTERVIEW_DATE - a.APPLICATION_DATE) as AVG_DAYS
+   FROM APPLICATIONS a
+   JOIN INTERVIEWS i ON (a.JOB_ID = i.JOB_ID AND a.USER_ID = i.USER_ID)
+   WHERE a.STATUS = 'Interview Scheduled';
+   ```
+
+2. **Find most active recruiters**
+   ```sql
+   SELECT u.USERNAME, COUNT(j.JOB_ID) as POSTED_JOBS
+   FROM JOBS j
+   JOIN USERACCOUNTS u ON j.POSTED_BY = u.USER_ID
+   WHERE u.ROLE = 'Recruiter'
+   GROUP BY u.USERNAME
+   ORDER BY POSTED_JOBS DESC;
+   ```

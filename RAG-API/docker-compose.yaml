@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  rag-api:
+    build: .
+    container_name: rag-api
+    ports:
+      - "8001:8000"
+    environment:
+      - ORACLE_USER=YourUsername
+      - ORACLE_PASSWORD=YourPassword
+      - ORACLE_DSN=oracle-xe/XE
+      - OPENAI_API_KEY=your-key
+    networks:
+      - oracle-network
+networks:
+  oracle-network:
+    external: true

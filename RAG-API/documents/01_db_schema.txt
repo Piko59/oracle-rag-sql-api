@@ -1,0 +1,49 @@
+# Human Resources Database Schema
+
+## Tables and Relationships Overview
+
+The database consists of four main tables that manage a recruitment and human resources system:
+
+1. USERACCOUNTS - Stores user credentials and roles
+2. JOBS - Contains job postings and descriptions
+3. APPLICATIONS - Tracks job applications by users
+4. INTERVIEWS - Records scheduled interviews and their results
+
+## Detailed Table Descriptions
+
+### USERACCOUNTS Table
+- USER_ID (PRIMARY KEY): Unique identifier for each user
+- USERNAME: User's login name
+- PASSWORD: User's password (hashed)
+- ROLE: User's role in the system, can be one of:
+  * Admin: System administrators
+  * Recruiter: HR staff who manage job postings and interviews
+  * Candidate: Job seekers who apply for positions
+
+### JOBS Table
+- JOB_ID (PRIMARY KEY): Unique identifier for each job posting
+- TITLE: Job position title
+- DESCRIPTION: Detailed job description
+- DEPARTMENT: The department the job belongs to
+
+### APPLICATIONS Table
+- APPLICATION_ID (PRIMARY KEY): Unique identifier for each application
+- JOB_ID (FOREIGN KEY): References the job being applied for
+- STATUS: Current status of the application, can be one of:
+  * Applied: Initial application submitted
+  * Under Review: Application is being reviewed
+  * Interview Scheduled: Candidate has been selected for interview
+  * Offer Extended: Job offer has been made
+  * Rejected: Application was not successful
+- USER_ID (FOREIGN KEY): References the user who applied
+
+### INTERVIEWS Table
+- INTERVIEW_ID (PRIMARY KEY): Unique identifier for each interview
+- JOB_ID (FOREIGN KEY): References the job position
+- INTERVIEW_DATE: Date and time of the interview
+- INTERVIEW_RESULT: Outcome of the interview, can be one of:
+  * Pending: Interview has not occurred yet
+  * In Progress: Interview process has started
+  * Completed: Interview has been conducted
+  * Cancelled: Interview was cancelled
+- USER_ID (FOREIGN KEY): References the candidate being interviewed
